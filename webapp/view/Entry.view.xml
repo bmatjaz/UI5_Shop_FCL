@@ -1,0 +1,7 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.Entry"
+ 	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Button text="Customer entry" press=".goToShopSide" type="Emphasized"/>
+	<Button text="Backend entry" press=".goToBackend" type="Accept" />
+</mvc:View>

@@ -1,0 +1,11 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.OrderConfirmation"
+ 	xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+    <Page title="Thank you for buying">
+        <Text text="Thanks for purchase" />
+    </Page>
+</mvc:View>

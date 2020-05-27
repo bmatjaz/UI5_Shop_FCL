@@ -1,0 +1,612 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.Checkout"
+    xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<NavContainer id="wizardNavContainer">
+		<pages>
+			<Page
+				id="overviewWizard"
+				title="{i18n>orderingProcedureTitle}"
+				showNavButton="true"
+				navButtonText="{i18n>backToFirstPage}"
+				navButtonPress=".onPressMasterBack">
+				<content>
+					<Wizard 
+						id="shoppingCartWizard" 
+						class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+						complete="checkCompleted"
+						enableBranching="true">
+						<steps>
+							<WizardStep
+								id="paymentTypeStep"
+								title="{i18n>selectPaymentMethod}"
+								subsequentSteps="creditCardStep, bankAccountStep, cashOnDeliveryStep"
+								complete="goToPaymentStep"
+								icon="sap-icon://money-bills">
+								<HBox
+									renderType="Bare"
+									alignItems="Center"
+									justifyContent="Center"
+									width="100%">
+									<SegmentedButton
+										select="setPaymentMethod"
+										id="paymentMethodSelection"
+										selectedKey="{/SelectedPayment}">
+										<items>
+											<SegmentedButtonItem
+												id="payViaCC"
+												key="Credit Card"
+												text="{i18n>creditCard}"/>
+											<SegmentedButtonItem
+												id="payViaBank"
+												key="Bank Transfer"
+												text="{i18n>bankTransfer}"/>
+											<SegmentedButtonItem
+												id="payViaCOD"
+												key="Cash on Delivery"
+												text="{i18n>cashOnDelivery}"/>
+										</items>
+									</SegmentedButton>
+								</HBox>
+							</WizardStep>
+							<WizardStep
+								id="creditCardStep"
+								title="{i18n>payWithCreditCardTitle}"
+								nextStep="invoiceStep"
+								activate=".onCheckStepActivation"
+								icon="sap-icon://credit-card"
+								validated="false">
+								<form:SimpleForm
+									editable="true"
+									layout="ResponsiveGridLayout">
+									<Label
+										labelFor="creditCardHolderName"
+										text="{i18n>ccHolderName}"
+										required="true">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="creditCardHolderName"
+										placeholder="{i18n>ccHolderNamePlaceholder}"
+										value="{
+											path: '/CreditCard/Name',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 2,
+												search: '^[a-zA-Z]+[\\s]?[a-zA-Z]+$'
+											}
+										}"
+										change="checkCreditCardStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>ccNumber}"
+										labelFor="creditCardNumber"
+										required="true">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<MaskInput
+										id="creditCardNumber"
+										placeholder="{i18n>ccNumberPlaceholder}"
+										mask = "CCCC-CCCC-CCCC-CCCC"
+										placeholderSymbol = "_"
+										value="{
+											path: '/CreditCard/CardNumber',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												search: '^[0-9-]+$',
+												minLength: 16
+											}
+										}"
+										change="checkCreditCardStep">
+										<rules>
+											<MaskInputRule
+												maskFormatSymbol="C"
+												regex="[0-9]"/>
+										</rules>
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</MaskInput>
+									<Label
+										text="{i18n>ccSecurityNumber}"
+										labelFor="creditCardSecurityNumber"
+										required="true">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<MaskInput
+										id="creditCardSecurityNumber"
+										placeholder="{i18n>ccSecurityNumberPlaceholder}"
+										mask = "CCC"
+										placeholderSymbol = "_"
+										value="{
+											path: '/CreditCard/SecurityCode',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 3,
+												search: '^[0-9]+$'
+											}
+										}"
+										change="checkCreditCardStep">
+										<rules>
+											<MaskInputRule
+												maskFormatSymbol ="C"
+												regex = "[0-9]"/>
+										</rules>
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</MaskInput>
+									<Label text="{i18n>ccExpirationDate}">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<DatePicker
+										id="creditCardExpirationDate"
+										value="{
+											path: '/CreditCard/Expire',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 7,
+												maxLength: 7
+											}
+										}"
+										valueFormat="MM/YYYY"
+										displayFormat="MM/YYYY"
+										required="true"
+										change="checkCreditCardStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</DatePicker>
+								</form:SimpleForm>
+							</WizardStep>
+							<WizardStep
+								id="bankAccountStep"
+								title="{i18n>bankAccountStepTitle}"
+								nextStep="invoiceStep"
+								icon="sap-icon://official-service">
+								<Panel>
+									<layout:Grid
+										defaultSpan="L6 M6 S10"
+										hSpacing="2">
+										<Label
+											text="{i18n>bankAccountName}"
+											design="Bold"/>
+										<Label text="Bank account"/>
+										<Label
+											text="{i18n>bankName}"
+											design="Bold"/>
+										<Label text="YESBANK" />
+										<Label
+											text="{i18n>bankAccountNumber}"
+											design="Bold"/>
+										<Label text="1903812380123"/>
+									</layout:Grid>
+								</Panel>
+							</WizardStep>
+							<WizardStep
+								id="cashOnDeliveryStep"
+								title="{i18n>cashOnDeliveryTitle}"
+								nextStep="invoiceStep"
+								activate=".onCheckStepActivation"
+								icon="sap-icon://money-bills"
+								validated="false">
+								<form:SimpleForm
+									editable="true"
+									layout="ResponsiveGridLayout">
+									<Label
+										text="{i18n>codName}"
+										required="true"
+										labelFor="cashOnDeliveryName">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="cashOnDeliveryName"
+										placeholder="{i18n>codNamePlaceholder}"
+										value="{
+											path: '/CashOnDelivery/FirstName',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 2
+											}
+										}"
+										change="checkCashOnDeliveryStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>codLastName}"
+										labelFor="cashOnDeliveryLastName"
+										required="true">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="cashOnDeliveryLastName"
+										placeholder="{i18n>codLastNamePlaceholder}"
+										value="{
+											path: '/CashOnDelivery/LastName',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 2
+											}
+										}"
+										change="checkCashOnDeliveryStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>codPhoneNumer}"
+										labelFor="cashOnDeliveryPhoneNumber"
+										required="true">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="cashOnDeliveryPhoneNumber"
+										placeholder="{i18n>codPhoneNumberPlaceholder}"
+										value="{
+											path: '/CashOnDelivery/PhoneNumber',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												search: '^[(0-9+]+[)\\s]?[0-9\\/\\s]+$'
+											}
+										}"
+										change="checkCashOnDeliveryStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>codEmail}"
+										labelFor="cashOnDeliveryEmail"
+										required="true">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="cashOnDeliveryEmail"
+										placeholder="{i18n>codEmailPlaceholder}"
+										value="{
+											path: '/CashOnDelivery/Email',
+											type: '.types.email'
+											}"
+										change="checkCashOnDeliveryStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+								</form:SimpleForm>
+							</WizardStep>
+							<WizardStep
+								id="invoiceStep"
+								title="{i18n>deliveryAddressTitle}"
+								activate=".onCheckStepActivation"
+								complete="invoiceAddressComplete"
+								icon="sap-icon://sales-quote"
+								validated="false">
+								<form:SimpleForm
+									layout="ResponsiveGridLayout"
+									editable="true">
+									<Label
+										text="{i18n>daName}"
+										required="true"
+										labelFor="invoiceAddressAddress">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="invoiceAddressAddress"
+										placeholder="{i18n>daNamePlaceholder}"
+										value="{
+											path: '/InvoiceAddress/Address',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 2,
+												search: '^[a-zA-Z-]+\\.?\\s?[0-9a-zA-Z\\s]*$'
+											}
+										}"
+										change="checkInvoiceStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>daAddress}"
+										required="true"
+										labelFor="invoiceAddressCity">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="invoiceAddressCity"
+										placeholder="{i18n>daAddressPlaceholder}"
+										value="{
+											path: '/InvoiceAddress/City',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 3,
+												search: '^[a-zA-Z\\s]+$'
+											}
+										}"
+										change="checkInvoiceStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>daZip}"
+										required="true"
+										labelFor="invoiceAddressZip">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="invoiceAddressZip"
+										type="Number"
+										placeholder="{i18n>daZipPlaceholder}"
+										value="{
+											path: '/InvoiceAddress/ZipCode',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 3,
+												search: '^[0-9]+$'
+											}
+										}"
+										change="checkInvoiceStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+									<Label
+										text="{i18n>daCountry}"
+										required="true"
+										labelFor="invoiceAddressCountry">
+										<layoutData>
+											<layout:GridData span="XL4 L4 M4 S12"/>
+										</layoutData>
+									</Label>
+									<Input
+										id="invoiceAddressCountry"
+										placeholder="{i18n>daCountryPlaceholder}"
+										value="{
+											path: '/InvoiceAddress/Country',
+											type: 'sap.ui.model.type.String',
+											constraints: {
+												minLength: 2,
+												search: '^[a-zA-Z]+$'
+											}
+										}"
+										change="checkInvoiceStep">
+										<layoutData>
+											<layout:GridData span="XL8 L8 M8 S12"/>
+										</layoutData>
+									</Input>
+								</form:SimpleForm>
+							</WizardStep>
+						</steps>
+					</Wizard>
+				</content>
+			</Page>
+			<Page
+				id="summaryPage"
+				backgroundDesign="Solid"
+				showHeader="false"
+				showNavButton="true"
+				navButtonText="{i18n>backToFirstPage}"
+				navButtonPress=".goToFirstPage">
+				<content>
+					<Panel>
+						<headerToolbar>
+							<Toolbar id="toolbarProductList">
+								<Title
+									id="checkoutItems"
+									text="{i18n>orderDetails}"
+									level="H2"
+									titleStyle="H4"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</headerToolbar>
+						<content>
+							<List
+								id="summaryEntryList"
+								noDataText="{i18n>emptyListText}"
+								items="{
+									path : 'cartProducts>/cartEntries',
+									sorter : {
+									path : 'ProductName',
+									descending : false
+								}
+							 }">
+								<items>
+									<StandardListItem 
+										title="{cartProducts>Quantity} x {cartProducts>ProductName}"
+										info="{
+											path : 'cartProducts>UnitPrice',
+											formatter : '.formatter.price'
+										} EUR"  />
+								</items>
+							</List>
+							<Text
+								id="totalPriceText"
+								class="totalText"
+								text="Total: {
+									path: '/totalPriceInShoppingCart',
+									formatter: '.formatter.price'
+									} EUR" />
+						</content>
+					</Panel>
+
+					<form:SimpleForm
+						editable="false"
+						layout="ResponsiveGridLayout"
+						ariaLabelledBy="toolbarPaymentTitle">
+						<form:toolbar>
+							<Toolbar id="toolbarPayment">
+								<Title
+									id="toolbarPaymentTitle"
+									text="{i18n>paymentInformation}"
+									level="H2"
+									titleStyle="H4"/>
+								<ToolbarSpacer/>
+
+							</Toolbar>
+						</form:toolbar>
+						<form:content>
+							<Label text="{i18n>payment}"/>
+							<Text text="{/SelectedPayment}"/>
+						</form:content>
+					</form:SimpleForm>
+
+					<form:SimpleForm
+							visible="{= ${/SelectedPayment}==='Credit Card' ? true : false}"
+							editable="false"
+							layout="ResponsiveGridLayout"
+							ariaLabelledBy="creditCardPaymentTitle">
+						<form:toolbar>
+							<Toolbar id="toolbarCreditCard">
+								<Title
+									id="creditCardPaymentTitle"
+									text="{i18n>ccDetails}"
+									level="H2"
+									titleStyle="H4"/>
+								<ToolbarSpacer/>
+								
+							</Toolbar>
+						</form:toolbar>
+						<form:content>
+							<Label text="{i18n>ccHolderName}"/>
+							<Text text="{/CreditCard/Name}"/>
+							<Label text="{i18n>ccNumber}"/>
+							<Text text="{/CreditCard/CardNumber}"/>
+							<Label text="{i18n>ccSecurityNumber}"/>
+							<Text text="{/CreditCard/SecurityCode}"/>
+							<Label text="{i18n>ccExpirationDate}"/>
+							<Text text="{/CreditCard/Expire}"/>
+						</form:content>
+					</form:SimpleForm>
+
+					<form:SimpleForm
+						visible="{= ${/SelectedPayment}==='Bank Transfer' ? true : false}"
+						title="How do we get your money"
+						editable="false"
+						layout="ResponsiveGridLayout">
+						<form:content>
+							<Label
+								text="{i18n>bankAccountName}"
+								design="Bold"/>
+							<Text text="Bank account name"/>
+							<Label
+								text="{i18n>bankName}"
+								design="Bold"/>
+							<Text text="BANKBANK"/>
+							<Label
+								text="{i18n>bankAccountNumber}"
+								design="Bold"/>
+							<Text text="3456435634"/>
+						</form:content>
+					</form:SimpleForm>
+					<form:SimpleForm
+						visible="{= ${/SelectedPayment}==='Cash on Delivery' ? true : false}"
+						editable="false"
+						layout="ResponsiveGridLayout"
+						ariaLabelledBy="cashOnDeliveryTitle">
+						<form:toolbar>
+							<Toolbar id="toolbarCOD">
+								<Title
+									id="cashOnDeliveryTitle"
+									text="{i18n>cashOnDeliveryTitle}"
+									level="H2"
+									titleStyle="H4"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</form:toolbar>
+						<form:content>
+							<Label text="{i18n>codName}"/>
+							<Text text="{/CashOnDelivery/FirstName}"/>
+							<Label text="{i18n>codLastName}"/>
+							<Text text="{/CashOnDelivery/LastName}"/>
+							<Label text="{i18n>codPhoneNumer}"/>
+							<Text text="{/CashOnDelivery/PhoneNumber}"/>
+							<Label text="{i18n>codEmail}"/>
+							<Text text="{/CashOnDelivery/Email}"/>
+						</form:content>
+					</form:SimpleForm>
+					<form:SimpleForm
+							title="{i18n>deliveryAddressTitle}"
+							editable="false"
+							layout="ResponsiveGridLayout"
+							ariaLabelledBy="invoiceAddressTitle">
+						<form:toolbar>
+							<Toolbar id="toolbarInvoice">
+								<Title
+									id="invoiceAddressTitle"
+									text="Where will we ship it"
+									level="H2"
+									titleStyle="H4"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</form:toolbar>
+						<form:content>
+							<Label text="{i18n>daName}"/>
+							<Text text="{/InvoiceAddress/Address}"/>
+							<Label text="{i18n>daAddress}"/>
+							<Text text="{/InvoiceAddress/City}"/>
+							<Label text="{i18n>daZip}" />
+							<Text text="{/InvoiceAddress/ZipCode}"/>
+							<Label text="{i18n>daCountry}"/>
+							<Text text="{/InvoiceAddress/Country}"/>
+						</form:content>
+					</form:SimpleForm>
+
+				</content>
+				<footer>
+					<Toolbar>
+						<Button
+							id="backToCart"
+							type="Emphasized"
+							text="{i18n>backToFirstPage}"
+							press=".onPressMasterBack">
+						</Button>
+						<ToolbarSpacer/>
+						<Button
+							id="submitOrder"
+							type="Accept"
+							text="{i18n>agreeText}"
+							press=".handleWizardSubmit">
+						</Button>
+						<Button
+							id="cancelOrder"
+							type="Reject"
+							text="{i18n>cancelText}"
+							press=".handleWizardCancel">
+						</Button>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</NavContainer>
+</mvc:View>

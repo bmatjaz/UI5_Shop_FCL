@@ -1,0 +1,68 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.Cart"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page
+		id="page"
+		title="{i18n>productsInCart}"
+		backgroundDesign="Solid"
+		showNavButton="{appView>/smallScreenMode}"
+		navButtonPress=".onBack"
+		showFooter="true">
+		<footer>
+			<Toolbar>
+				<Text
+					id="totalPriceText"
+					text="Total: {
+						path: '/totalPriceInShoppingCart',
+						formatter: '.formatter.price'
+						} EUR"/>
+				<ToolbarSpacer/>
+				<Button
+					id="proceedButton"
+					text="{i18n>proceedToChechout}"
+					type="Accept"
+					press=".onProceedButtonPress"/>
+			</Toolbar>
+		</footer>
+		<Table id="productTable" items="{cartProducts>/cartEntries}">
+			<columns>
+				<Column>
+					<Label text="{i18n>productName}" />
+				</Column>
+				<Column>
+					<Label text="{i18n>productPrice}" />
+				</Column>
+				<Column>
+					<Label text="{i18n>maxQuantity}" />
+				</Column>
+				<Column>
+					<Label text="{i18n>quantityInCart}"/>
+				</Column>
+				<Column>
+					<Label />
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Navigation"
+					press=".goToDetails">
+					<cells>
+						<Text text="{cartProducts>ProductName}" />
+						<Text text="{
+								path : 'cartProducts>UnitPrice',
+								formatter : '.formatter.price'
+							} EUR " />
+						<Text text="{cartProducts>UnitsInStock}" />
+						<StepInput
+							value="{cartProducts>Quantity}"
+							change=".totalPrice"
+							min="1"
+							max="{cartProducts>UnitsInStock}"/>
+						<Button icon="sap-icon://delete" text="{i18n>removeFromCart}" press=".delete"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Page>
+</mvc:View>

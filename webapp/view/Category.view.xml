@@ -1,0 +1,86 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.Category"
+	xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:f="sap.f"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc">
+    <ObjectPageLayout
+		id="ObjectPageLayout"
+		showTitleInHeaderContent="true"
+		alwaysShowContentHeader="false"
+		preserveHeaderStateOnScroll="false"
+		headerContentPinnable="true"
+		isChildPage="true"
+		upperCaseAnchorBar="false">
+        <headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<actions>
+					<m:ToggleButton
+						id="cartButton"
+						pressed="false"
+						text="{i18n>shoppingCart}"
+						icon="sap-icon://cart" 
+						press=".openCart" />
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+        <sections>
+			<ObjectPageSection title="{i18n>productsPageSectionTitle}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="productsTable"
+								items="{/Products}">
+								<m:columns>
+									<m:Column>
+										<m:Text text="{i18n>productName}" />
+									</m:Column>
+									<m:Column>
+										<m:Text text="{i18n>productPrice}" />
+									</m:Column>
+									<m:Column>
+										<m:Text text="Discontinued" />
+									</m:Column>
+									<m:Column>
+										
+									</m:Column>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem
+										id="cli"
+										type="Navigation"
+                						press=".getProductDetails">
+										<m:cells>
+											<m:ObjectIdentifier text="{ProductName}"/>
+										</m:cells>
+										<m:cells>
+											<m:ObjectIdentifier text="{
+												path: 'UnitPrice',
+												formatter: '.formatter.price'
+												} EUR"/>
+										</m:cells>
+										<m:cells>
+											<m:ObjectIdentifier text="{
+												path: 'Discontinued',
+												formatter: '.formatter.isDiscontinued'
+											}"/>
+										</m:cells>
+										<m:cells>
+											<m:Button
+												id="addToCartButton"
+												text="{i18n>shoppingCart}"
+												icon="sap-icon://cart-3" 
+												press=".addToCart" />
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

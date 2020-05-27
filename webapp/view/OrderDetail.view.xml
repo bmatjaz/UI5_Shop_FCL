@@ -1,0 +1,36 @@
+<mvc:View
+    controllerName="sap.ui.flex.controller.OrderDetail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Table 
+        id="orderedItems" 
+        items="{/Order_Details}">
+        <columns>
+            <Column>
+                <Label text="{i18n>productId}" />
+            </Column>
+            <Column>
+                <Label text="{i18n>quantity}" />
+            </Column>
+             <Column>
+                <Label text="{i18n>discount}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem 
+                type="Navigation"
+                press=".goToDetails">
+                <cells>
+                    <Text text="{ProductID}" />
+                </cells>
+                 <cells>
+                    <Text text="{Quantity}" />
+                </cells>
+                 <cells>
+                    <Text text="{Discount}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</mvc:View>
+           

@@ -1,0 +1,31 @@
+<mvc:View
+    controllerName="sap.ui.flex.controller.ShipperInfo"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <VBox>
+        <Label text="OrderDate" />
+        <Text text="{
+            path: 'OrderDate',
+            formatter: '.formatter.dateFormat'
+            }" />
+        <Label text="Required date" />
+        <Text text="{
+            path: 'RequiredDate',
+            formatter: '.formatter.dateFormat'
+            }" />
+        <Label text="Shipped date" />
+        <Text text="{
+            path: 'ShippedDate',
+            formatter: '.formatter.dateFormat'
+            }" />
+        <Label text="Shipper name" />
+        <Text text="{ShipName}" />
+        <Label text="Address" />
+        <Text text="{ShipAddress}" />
+        <Label text="Postal code" />
+        <Text text="{ShipPostalCode}" />
+        <Label text="Country" />
+        <Text text="{ShipCountry}" />	
+    </VBox>
+</mvc:View>
+           

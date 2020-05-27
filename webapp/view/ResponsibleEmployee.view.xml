@@ -1,0 +1,20 @@
+<mvc:View
+    controllerName="sap.ui.flex.controller.ResponsibleEmployee"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <VBox>
+        <Label text="{i18n>employeeID}" />
+        <Text text="{EmployeeID}" />
+        <Label text="{i18n>lastName}" />
+        <Text text="{LastName}" />
+        <Label text="{i18n>firstName}" />
+        <Text text="{FirstName}" />
+        <Label text="{i18n>title}" />
+        <Text text="{Title}" />
+        <Label text="{i18n>homePhone}" />
+        <Text text="{HomePhone}" />
+        <Label text="{i18n>extension}" />
+        <Text text="{Extension}" />
+    </VBox>
+</mvc:View>
+           

@@ -1,0 +1,59 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.Orders"
+   	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+	height="100%">
+	<f:DynamicPage 
+		id="dynamicPageId"
+		showFooter="true">
+		<f:header>
+			<f:DynamicPageHeader>
+				<layout:HorizontalLayout>
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<Label text="{i18n>language}" labelFor="languageBox"/>
+					</layout:VerticalLayout>
+					<layout:VerticalLayout>
+						<ComboBox 
+							id="languageBox"
+							change="changeLanguage"
+							selectedKey="en">
+							<core:Item key="de" text="DE"/>
+							<core:Item key="en" text="EN"/>
+						</ComboBox>
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
+			</f:DynamicPageHeader>
+		</f:header>	
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>pastOrders}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+        <List
+            id="idList"
+            items="{/Orders}"
+            growing="true"
+            growingThreshold="50">
+            <StandardListItem
+                type="Active"
+                press="onListItemPress"
+                title="{OrderID}"
+                description="{CustomerID}"/>
+        </List>
+       </f:content>
+		<f:footer>
+			<Toolbar>
+				<Button
+					text="{i18n>entryPage}"
+					press=".onBackToEntry"/>
+			</Toolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

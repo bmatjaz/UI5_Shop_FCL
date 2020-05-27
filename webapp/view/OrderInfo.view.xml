@@ -1,0 +1,64 @@
+<mvc:View
+	controllerName="sap.ui.flex.controller.OrderInfo"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+	height="100%">
+	<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}"
+		stickySubheaderProvider="iconTabBar"
+		class="sapUiNoContentPadding">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>orderID} {OrderID}"/>
+				</f:heading>
+				<f:actions>
+					<Button
+						text="{i18n>invoiceExport}"
+						type="Emphasized"
+						press="exportCSV"/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<layout:HorizontalLayout allowWrapping="true">
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<ObjectAttribute title="{i18n>customerID}" text="{CustomerID}"/>
+						<ObjectAttribute title="{i18n>employeeID}" text="{EmployeeID}"/>
+						<ObjectAttribute title="{i18n>shipName}" text="{ShipName}"/>
+					</layout:VerticalLayout>
+
+					<layout:VerticalLayout>
+						<ObjectAttribute title="{i18n>shippedDate}"/>
+						<ObjectStatus text="{
+							path: 'ShippedDate',
+							formatter: '.formatter.dateFormat'
+							}" 
+							state="Success" />
+						<!-- Add formatter for color sent/not sent -->
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<IconTabBar id="iconTabBar" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter text="{i18n>info}">
+						<mvc:XMLView viewName="sap.ui.flex.view.ShipperInfo"/>
+					</IconTabFilter>
+					<IconTabFilter text="{i18n>customerInfo}">
+						<mvc:XMLView viewName="sap.ui.flex.view.CustomerInfo"/>
+					</IconTabFilter>
+					<IconTabFilter text="{i18n>responsibleEmployee}">
+						<mvc:XMLView viewName="sap.ui.flex.view.ResponsibleEmployee"/>
+					</IconTabFilter>
+					<IconTabFilter text="{i18n>orderedItems}">
+						<mvc:XMLView viewName="sap.ui.flex.view.OrderDetail"/>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

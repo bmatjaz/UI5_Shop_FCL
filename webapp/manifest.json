@@ -1,0 +1,205 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "sap.ui.flex",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"resources": "resources.json",
+		"dataSources": {
+			"mainService": {
+				"uri": "http://localhost:8081/https://services.odata.org/V2/Northwind/Northwind.svc/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://cart",
+			"favIcon": "img/favicon.ico"
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sap.ui.flex.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.60.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.f": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.ui.flex.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true
+			}
+		},
+		"handleValidation": true,
+		"resources": {
+			"css": [{"uri": "css/style.css"}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.f.routing.Router",
+				"viewType": "XML",
+				"viewPath": "sap.ui.flex.view",
+				"controlId": "layout",
+				"controlAggregation": "midColumnPages",
+				"bypassed": {
+					"target": [
+						"home",
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "entry",
+					"target": [
+						"entry"
+					]
+				},
+				{
+					"pattern": "shop",
+					"name": "home",
+					"target": [
+						"home",
+						"welcome"
+					]
+				},
+				{
+					"pattern": "welcome/cart",
+					"name": "welcomeCart",
+					"target": [
+						"home",
+						"welcome",
+						"cart"
+					]
+				},
+				{
+					"pattern": "category/cart",
+					"name": "categoryCart",
+					"target": [
+						"home",
+						"category",
+						"cart"
+					]
+				},
+				{
+					"pattern": "category/{categoryID}",
+					"name": "category",
+					"target": [
+						"home",
+						"category"
+					]
+				},
+				{
+					"pattern": "checkout",
+					"name": "checkout",
+					"target": [
+						"checkout"
+					]
+				},
+				{
+					"pattern": "orderConfirmation",
+					"name": "orderConfirmation",
+					"target": [
+						"home",
+						"orderConfirmation"
+					]
+				},
+				{
+					"pattern": "detail/{productID}",
+					"name": "detail",
+					"target": [
+						"home",
+						"category",
+						"detail"
+					]
+				},
+				{
+					"pattern": "orders",
+					"name": "orders",
+					"target": [
+						"orders"
+					]
+				},
+				{
+					"pattern": "orders/{orderID}",
+					"name": "orderDetail",
+					"target": [
+						"orders",
+						"orderInfo"
+					]
+				}
+			],
+			"targets": {
+				"welcome": {
+					"viewName": "Welcome",
+					"controlAggregation": "midColumnPages"
+				},
+				"home": {
+					"viewName": "Home",
+					"controlAggregation": "beginColumnPages"
+				},
+				"cart": {
+					"viewName": "Cart",
+					"controlAggregation": "endColumnPages"
+				},
+				"category": {
+					"viewName": "Category",
+					"controlAggregation": "midColumnPages"
+				},
+				"checkout": {
+					"viewName": "Checkout",
+					"controlAggregation": "beginColumnPages"
+				},
+				"orderConfirmation": {
+					"viewName": "OrderConfirmation",
+					"controlAggregation": "midColumnPages"
+				},
+				"detail": {
+					"viewName": "Detail",
+					"controlAggregation": "endColumnPages"
+				},
+				"entry": {
+					"viewName": "Entry",
+					"controlAggregation": "beginColumnPages"
+				},
+				"orders": {
+					"viewName": "Orders",
+					"controlAggregation": "beginColumnPages"
+				},
+				"orderInfo": {
+					"viewName": "OrderInfo",
+					"controlAggregation": "midColumnPages"
+				}
+			}
+		}
+	}
+}
