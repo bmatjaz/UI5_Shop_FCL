@@ -15,13 +15,14 @@ sap.ui.define([
         _onRouteMatched: function() {
 			var bSmallScreen = this.getModel("appView").getProperty("/smallScreenMode");
 			if (bSmallScreen) {
-				this._setLayout("One");
+				this._setLayout("Two");
 			}
 		},
 		onListItemPress:function(oEvent) {
 			this.categoryID = oEvent.getSource().getBindingContext().getProperty("CategoryID");
 			this._router.navTo("category", {categoryID: this.categoryID});
 			this._unhideMiddlePage();
+		
 		},
 		changeLanguage: function(oEvent) {
             var oValidatedComboBox = oEvent.getSource(),

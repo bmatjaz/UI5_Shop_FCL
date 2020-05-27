@@ -8,7 +8,6 @@ sap.ui.define([
 
 		onInit : function () {
 			var oViewModel;
-
 			oViewModel = new JSONModel({
 				delay : 0,
 				layout : "TwoColumnsMidExpanded",

@@ -1,18 +1,14 @@
 sap.ui.define([
-	"./BaseController",
-	"sap/m/MessageBox",
-	"../model/formatter",
-	"sap/ui/model/json/JSONModel"
-], function (BaseController, MessageBox, formatter, JSONModel) {
+	"./BaseController"
+], function (BaseController) {
 	"use strict";
 
-	return BaseController.extend("sap.ui.flex.controller.Checkout", {
-        formatter: formatter,
+	return BaseController.extend("sap.ui.flex.controller.OrderConfirmation", {
 		
-		//creating model for data needed for checkout
+		//onInit calls orderConfirmation target and sets layout to two colums
         onInit : function () {
             this.getRouter().getRoute("orderConfirmation").attachMatched(function () {
-				this._setLayout("One");
+				this._setLayout("Two");
 			}.bind(this));
 		}
 	});

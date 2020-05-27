@@ -19,30 +19,30 @@ sap.ui.define([
 				{
 					SelectedPayment: "Credit Card",
 					CashOnDelivery: {
-						FirstName: "",
-						LastName: "",
-						PhoneNumber: "",
-						Email: ""
+						FirstName: "asdfdsaf",
+						LastName: "asdfadsf",
+						PhoneNumber: "213423",
+						Email: "dfsgfdsg@asd.si"
 					},
 					InvoiceAddress: {
-						Address: "",
-						City: "",
-						ZipCode: "",
-						Country: "",
-						Note: ""
+						Address: "asdfasd",
+						City: "sadfds",
+						ZipCode: "23432",
+						Country: "dfgsdfg",
+						Note: "sfdgsfdg"
 					},
 					DeliveryAddress: {
-						Address: "",
-						Country: "",
-						City: "",
-						ZipCode: "",
-						Note: ""
+						Address: "dfgfds",
+						Country: "dsfgfsdg",
+						City: "fdsgfdsg",
+						ZipCode: "2345",
+						Note: "sdfgfds"
 					},
 					CreditCard: {
-						Name: "",
-						CardNumber: "",
-						SecurityCode: "",
-						Expire: ""
+						Name: "fdsgfdg",
+						CardNumber: "32544353535353535",
+						SecurityCode: "324",
+						Expire: "05/2020"
 					},
 					totalPriceInShoppingCart: 0
 				}
@@ -224,7 +224,7 @@ sap.ui.define([
 		 */
 		handleWizardCancel: function () {
 			var sText = "You shure you want to cancle";
-			this._handleSubmitOrCancel(sText, "warning", "master");
+			this._handleSubmitOrCancel(sText, "warning", "home");
 		},
 		_handleSubmitOrCancel: function (sMessage, sMessageBoxType, sRoute) {
 			MessageBox[sMessageBoxType](sMessage, {
