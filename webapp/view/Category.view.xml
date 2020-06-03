@@ -70,7 +70,7 @@
 										<m:cells>
 											<m:Button
 												id="addToCartButton"
-												text="{i18n>shoppingCart}"
+												text="{i18n>addToCart}"
 												icon="sap-icon://cart-3" 
 												press=".addToCart" />
 										</m:cells>

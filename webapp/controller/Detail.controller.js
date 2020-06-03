@@ -15,6 +15,7 @@ sap.ui.define([
 		},
 		_onRouteMatched: function(oEvent) {
 			this._setLayout("Three");
+			this.categoryId = oEvent.getParameter("arguments").categoryID
 			var productId = oEvent.getParameter("arguments").productID;
 			this.getView().bindElement("/Products(" + productId + ")");
 		},
@@ -24,20 +25,8 @@ sap.ui.define([
 			var oCartModel = this.getView().getModel("cartProducts");			
 			cart.addToCart(oResourceBundle, oProduct, oCartModel);
 		},
-		backToProducts: function (oEvent) {
-			var oHistory = History.getInstance();
-			var sPreviousHash = oHistory.getPreviousHash();
-
-			if (sPreviousHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-				oRouter.navTo("cart", true);
-			}
-		},
-		goTocart: function(oEvent) {
-			var sCategoryId = oEvent.getSource().getBindingContext().getProperty("CategoryID");
-			this._oRouter.navTo("cart", {categoryID: sCategoryId});
+		backToProducts: function () {
+			this._oRouter.navTo("category", {categoryID:this.categoryId})
 		}
 	});
 });

@@ -6,11 +6,9 @@ sap.ui.define([
 	return BaseController.extend("sap.ui.flex.controller.Entry", {
 
 		onInit : function () {
-			this._oRouter = this.getRouter();
-			this._oRouter.getRoute("entry").attachPatternMatched(this._routePatternMatched, this);
-		},
-		_routePatternMatched: function () {
-			this._setLayout("One");
+			this.getRouter().getRoute("entry").attachMatched(function () {
+				this._setLayout("One");
+			}.bind(this));
 		},
 		goToShopSide: function() {
 			this.getRouter().navTo("home");

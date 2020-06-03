@@ -10,7 +10,7 @@ sap.ui.define([
 		onListItemPress: function(oEvent) {
 			var orderID = oEvent.getSource().getBindingContext().getProperty("OrderID");
 			this._setLayout("Two");
-			this.oRouter.navTo("orderDetail", {orderID: orderID});
+			this.oRouter.navTo("orderInformation", {orderID: orderID});
 		},
 		onBackToEntry: function() {
 			this.oRouter.navTo("entry");

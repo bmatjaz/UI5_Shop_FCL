@@ -12,9 +12,23 @@ sap.ui.define([
 			var oOwnerComponent = this.getOwnerComponent();
 			this.oRouter = oOwnerComponent.getRouter();
 			this.oRouter.getRoute("category").attachPatternMatched(this._onProductMatched, this);
+			//check if cart is open on load (in case of page refresh)
+			this.buttonCheck();
+		},
+		buttonCheck: function() {
+			if((window.location.href).slice(-5)=="/cart") {
+				var button = this.getView().byId("cartButton");
+				button.setPressed(true);
+			} else {
+				var button = this.getView().byId("cartButton");
+				button.setPressed(false);
+			}
 		},
 		//when view is opened get all products based on category
 		_onProductMatched: function (oEvent) {
+			this.buttonCheck();
+			this._setLayout("Two");
+
 			this.categoryId = oEvent.getParameter("arguments").categoryID;
 			var _oTable = this.getView().byId("productsTable");
 			var oTemplate = _oTable.getBindingInfo("items").template;
@@ -25,9 +39,9 @@ sap.ui.define([
 			_oTable.bindAggregation("items", oBindingInfo);
 		},
 		openCart: function (oEvent) {
-			var bPressed = oEvent.getParameter("pressed");
-			this._setLayout(bPressed ? "Three" : "Two");
-			this.getRouter().navTo(bPressed ? ("categoryCart") : ("category", {categoryID: this.categoryId}));
+			this.bPressed = oEvent.getParameter("pressed");
+			this._setLayout(this.bPressed  ? "Three" : "Two");
+			this.getRouter().navTo(this.bPressed  ? ("categoryCart") : ("category", {categoryID: this.categoryId}));
 		},
 		//selected product is sent to cart
 		addToCart: function(oEvent) {
@@ -37,10 +51,14 @@ sap.ui.define([
 			cart.addToCart(oResourceBundle, oProduct, oCartModel);
 		},
 		getProductDetails: function(oEvent) {
+			var button = this.getView().byId("cartButton");
+			if(button.getPressed()){
+				button.setPressed(false);
+			}
 			var oBindingContext = oEvent.getSource().getBindingContext();
 			var sEntryId = oBindingContext.getObject().ProductID;
 			this.oRouter.navTo("detail",
-				{categoryID:"1", productID: sEntryId });
+				{categoryID:this.categoryId, productID: sEntryId });
 		}
 	});
 });

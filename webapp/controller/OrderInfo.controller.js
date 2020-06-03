@@ -9,7 +9,7 @@ sap.ui.define([
 		formatter: formatter,
 		onInit: function () {
 			this._oRouter = this.getOwnerComponent().getRouter();
-			this._oRouter.getRoute("orderDetail").attachPatternMatched(this._onProductMatched, this);
+			this._oRouter.getRoute("orderInformation").attachPatternMatched(this._onProductMatched, this);
 		},
 		//
 		_onProductMatched: function (oEvent) {

@@ -7,7 +7,7 @@ sap.ui.define([
 		onInit: function () {
 			var oOwnerComponent = this.getOwnerComponent();
 			this.oRouter = oOwnerComponent.getRouter();
-			this.oRouter.getRoute("orderDetail").attachPatternMatched(this._onProductMatched, this);
+			this.oRouter.getRoute("orderInformation").attachPatternMatched(this._onProductMatched, this);
 		},
 		_onProductMatched: function (oEvent) {
             this.orderID = oEvent.getParameter("arguments").orderID;

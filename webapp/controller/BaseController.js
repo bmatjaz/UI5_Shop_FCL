@@ -70,10 +70,6 @@ sap.ui.define([
 				this.getModel("appView").setProperty("/smallScreenMode", true);
 			} else {
 				this.getModel("appView").setProperty("/smallScreenMode", false);
-				// swich back to two column mode when device orientation is changed
-				if (sLayout === "OneColumn") {
-					this._setLayout("Two");
-				}
 			}
 		},
 

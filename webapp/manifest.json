@@ -134,7 +134,7 @@
 					]
 				},
 				{
-					"pattern": "detail/{productID}",
+					"pattern": "category/{categoryID}/detail/{productID}",
 					"name": "detail",
 					"target": [
 						"home",
@@ -150,8 +150,8 @@
 					]
 				},
 				{
-					"pattern": "orders/{orderID}",
-					"name": "orderDetail",
+					"pattern": "orders/details/{orderID}",
+					"name": "orderInformation",
 					"target": [
 						"orders",
 						"orderInfo"
