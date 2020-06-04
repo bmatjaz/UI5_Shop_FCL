@@ -102,7 +102,7 @@
 					]
 				},
 				{
-					"pattern": "category/cart",
+					"pattern": "category/{categoryID}/cart",
 					"name": "categoryCart",
 					"target": [
 						"home",

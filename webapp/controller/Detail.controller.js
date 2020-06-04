@@ -14,6 +14,8 @@ sap.ui.define([
 			this._oRouter.getRoute("detail").attachPatternMatched(this._onRouteMatched, this);
 		},
 		_onRouteMatched: function(oEvent) {
+			this._setToggleCartButton(false);
+
 			this._setLayout("Three");
 			this.categoryId = oEvent.getParameter("arguments").categoryID
 			var productId = oEvent.getParameter("arguments").productID;
@@ -27,6 +29,9 @@ sap.ui.define([
 		},
 		backToProducts: function () {
 			this._oRouter.navTo("category", {categoryID:this.categoryId})
+		},
+		cartButtonSetup: function() {
+			
 		}
 	});
 });

@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"./model/LocalStorageModel",
-	"./model/models"
-], function(UIComponent, LocalStorageModel, models) {
+	"./model/models",
+	"sap/ui/model/json/JSONModel"
+], function(UIComponent, LocalStorageModel, models, JSONModel) {
 	"use strict";
 
 	return UIComponent.extend("sap.ui.flex.Component", {
@@ -27,6 +28,11 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+
+			var oCommonData = new JSONModel({
+				cartButonPressed : false
+			})
+			this.setModel(oCommonData, "commonData")
 
 			// call the base component's init function and create the App view
 			UIComponent.prototype.init.apply(this, arguments);

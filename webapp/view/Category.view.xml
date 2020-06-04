@@ -18,7 +18,7 @@
 				<actions>
 					<m:ToggleButton
 						id="cartButton"
-						pressed="false"
+						pressed="{commonData>/cartButonPressed}"
 						text="{i18n>shoppingCart}"
 						icon="sap-icon://cart" 
 						press=".openCart" />

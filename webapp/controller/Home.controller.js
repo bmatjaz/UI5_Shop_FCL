@@ -22,7 +22,6 @@ sap.ui.define([
 			this.categoryID = oEvent.getSource().getBindingContext().getProperty("CategoryID");
 			this._router.navTo("category", {categoryID: this.categoryID});
 			this._unhideMiddlePage();
-		
 		},
 		changeLanguage: function(oEvent) {
             var oValidatedComboBox = oEvent.getSource(),

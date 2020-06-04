@@ -22,9 +22,10 @@ sap.ui.define([
 			})
 			this.getView().setModel(oModel);
 		},
-		_routePatternMatched: function () {
+		_routePatternMatched: function (oEvent) {
 			this.totalPrice();
 			this._setLayout("Three");
+			this.categoryId = oEvent.getParameter("arguments").categoryID;
 		},
 		//whenever cart opens call function totalPrice to get sum of all product prices in cart
 		_onObjectMatched: function() {
@@ -80,8 +81,10 @@ sap.ui.define([
 		goToDetails: function(oEvent) {
 			var oBindingContext = oEvent.getSource().getBindingContext(sCartModelName);
 			var sEntryId = oBindingContext.getObject().ProductID;
+			if(this.categoryId == undefined)
+				this.categoryId = 1;
 			this._oRouter.navTo("detail",
-				{categoryID:"1", productID: sEntryId });
+				{categoryID:this.categoryId, productID: sEntryId });
 		}
 	});
 });

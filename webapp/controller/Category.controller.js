@@ -12,23 +12,11 @@ sap.ui.define([
 			var oOwnerComponent = this.getOwnerComponent();
 			this.oRouter = oOwnerComponent.getRouter();
 			this.oRouter.getRoute("category").attachPatternMatched(this._onProductMatched, this);
-			//check if cart is open on load (in case of page refresh)
-			this.buttonCheck();
+			//this.oRouter.getRoute("categoryCart").attachPatternMatched(this._onProductMatched, this);
 		},
-		buttonCheck: function() {
-			if((window.location.href).slice(-5)=="/cart") {
-				var button = this.getView().byId("cartButton");
-				button.setPressed(true);
-			} else {
-				var button = this.getView().byId("cartButton");
-				button.setPressed(false);
-			}
-		},
-		//when view is opened get all products based on category
 		_onProductMatched: function (oEvent) {
-			this.buttonCheck();
 			this._setLayout("Two");
-
+			this.setCartButtonFalse();
 			this.categoryId = oEvent.getParameter("arguments").categoryID;
 			var _oTable = this.getView().byId("productsTable");
 			var oTemplate = _oTable.getBindingInfo("items").template;
@@ -38,10 +26,34 @@ sap.ui.define([
 			};
 			_oTable.bindAggregation("items", oBindingInfo);
 		},
-		openCart: function (oEvent) {
-			this.bPressed = oEvent.getParameter("pressed");
-			this._setLayout(this.bPressed  ? "Three" : "Two");
-			this.getRouter().navTo(this.bPressed  ? ("categoryCart") : ("category", {categoryID: this.categoryId}));
+		setCartButtonFalse: function() {
+			var button = this.getView().byId("cartButton");
+			if(button.getPressed()){
+				button.setPressed(false);
+				this._setToggleCartButton(false);
+			}
+			console.log("button set to false with page load")
+		},
+		openCart: function () {
+			this.bPressed = this.getView().byId("cartButton");
+
+			this.getView().getModel("commonData");
+			var oModel = this.getView().getModel("commonData");
+			var oModelCommonData = oModel.getData();
+
+			if(this.categoryId == undefined)
+				this.categoryId = 1;
+				
+			if((window.location.href).slice(-5) != "/cart" || this.bPressed.getPressed()) {
+				oModelCommonData.cartButonPressed = true;
+				this._setLayout("Three");
+				this.getRouter().navTo("categoryCart", {categoryID: this.categoryId})
+			} 
+			else {
+				oModelCommonData.cartButonPressed = false;
+				this._setLayout("Two");
+				this.getRouter().navTo("category", {categoryID: this.categoryId})
+			}
 		},
 		//selected product is sent to cart
 		addToCart: function(oEvent) {
@@ -54,7 +66,12 @@ sap.ui.define([
 			var button = this.getView().byId("cartButton");
 			if(button.getPressed()){
 				button.setPressed(false);
+				this._setToggleCartButton(false);
 			}
+
+			if(this.categoryId == undefined)
+				this.categoryId = 1;
+
 			var oBindingContext = oEvent.getSource().getBindingContext();
 			var sEntryId = oBindingContext.getObject().ProductID;
 			this.oRouter.navTo("detail",
