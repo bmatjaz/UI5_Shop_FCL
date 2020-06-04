@@ -32,7 +32,6 @@ sap.ui.define([
 				button.setPressed(false);
 				this._setToggleCartButton(false);
 			}
-			console.log("button set to false with page load")
 		},
 		openCart: function () {
 			this.bPressed = this.getView().byId("cartButton");
@@ -44,7 +43,7 @@ sap.ui.define([
 			if(this.categoryId == undefined)
 				this.categoryId = 1;
 				
-			if((window.location.href).slice(-5) != "/cart" || this.bPressed.getPressed()) {
+			if(this.bPressed.getPressed()) {
 				oModelCommonData.cartButonPressed = true;
 				this._setLayout("Three");
 				this.getRouter().navTo("categoryCart", {categoryID: this.categoryId})

@@ -14,7 +14,6 @@ sap.ui.define([
 		},
 		_onRouteMatched: function(oEvent) {
 			var productId = oEvent.getParameter("arguments").productID;
-			console.log(productId)
 			this.getView().bindElement("/Products(" + productId + ")");
 		}
 	});

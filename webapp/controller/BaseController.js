@@ -139,6 +139,8 @@ sap.ui.define([
 			var oModelCommonData = oModel.getData();
 
 			oModelCommonData.cartButonPressed=isTrue;
+
+			oModel.setData(oModelCommonData);
 		
 		}
 	});
