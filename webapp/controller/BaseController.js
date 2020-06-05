@@ -142,6 +142,14 @@ sap.ui.define([
 
 			oModel.setData(oModelCommonData);
 		
-		}
+		},
+		totalPrice: function() {
+			var oCartModel = this.getOwnerComponent().getModel("cartProducts").getData().cartEntries;
+			var totalPrice = 0;
+			for (var key in oCartModel) {
+				totalPrice += oCartModel[key].Quantity * oCartModel[key].UnitPrice
+			}
+			this.getModel("commonData").setProperty("/totalPrice", totalPrice);
+		},
 	});
 });

@@ -16,11 +16,6 @@ sap.ui.define([
 			this._oRouter = this.getRouter();
 			this._oRouter.getRoute("welcomeCart").attachPatternMatched(this._routePatternMatched, this);
 			this._oRouter.getRoute("categoryCart").attachPatternMatched(this._routePatternMatched, this);
-
-			var oModel = new JSONModel({
-				totalPriceInShoppingCart: 0
-			})
-			this.getView().setModel(oModel);
 		},
 		_routePatternMatched: function (oEvent) {
 			this.totalPrice();
@@ -61,19 +56,6 @@ sap.ui.define([
 					this.totalPrice();
 				}.bind(this)
 			});
-		},
-		//function to calculate price of all items in cart
-		totalPrice: function() {
-			var oCartModel = this.getOwnerComponent().getModel("cartProducts").getData().cartEntries;
-			var totalPrice = 0;
-			
-			for (var key in oCartModel) {
-				totalPrice += oCartModel[key].Quantity * oCartModel[key].UnitPrice
-			}
-			var oModel = this.getView().getModel();
-			var oModelData = oModel.getData();
-			oModelData.totalPriceInShoppingCart = totalPrice;
-			oModel.setData(oModelData);
 		},
 		onProceedButtonPress: function() {
 			this._oRouter.navTo("checkout");

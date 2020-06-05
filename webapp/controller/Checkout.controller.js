@@ -43,12 +43,10 @@ sap.ui.define([
 						CardNumber: "32544353535353535",
 						SecurityCode: "324",
 						Expire: "05/2020"
-					},
-					totalPriceInShoppingCart: 0
+					}
 				}
 			);
 			this.getView().setModel(oModel);
-            this.totalPrice();
 
             this.getRouter().getRoute("checkout").attachMatched(function () {
 				this._setLayout("One");
@@ -238,7 +236,7 @@ sap.ui.define([
 						oWizard.discardProgress(oWizard.getSteps()[0]);
 
 						var oModel = this.getView().getModel();
-						
+
 						var oCartModel = this.getOwnerComponent().getModel("cartProducts");
 						
 						var oModelData = oModel.getData();
@@ -251,7 +249,6 @@ sap.ui.define([
 						//all relevant cart properties are set back to default. Content is deleted.
 						var oCartModelData = oCartModel.getData();
 						oCartModelData.cartEntries = {};
-						oCartModelData.totalPrice = 0;
 						oCartModel.setData(oCartModelData);
 						this.getOwnerComponent().getRouter().navTo(sRoute);
 					}
@@ -273,19 +270,6 @@ sap.ui.define([
 
 			oNavContainer.attachAfterNavigate(_fnAfterNavigate);
 			oNavContainer.to(this.byId("overviewWizard"));
-		},
-		totalPrice: function() {
-			var oCartModel = this.getOwnerComponent().getModel("cartProducts").getData().cartEntries;
-			var totalPrice = 0;
-			
-			for (var key in oCartModel) {
-				totalPrice += oCartModel[key].Quantity * oCartModel[key].UnitPrice
-			}
-			var oModel = this.getView().getModel();
-			var oModelData = oModel.getData();
-			oModelData.totalPriceInShoppingCart = totalPrice;
-			oModel.setData(oModelData);
-		},
-
+		}
 	});
 });

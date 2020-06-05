@@ -14,7 +14,7 @@
 				<Text
 					id="totalPriceText"
 					text="Total: {
-						path: '/totalPriceInShoppingCart',
+						path: 'commonData>/totalPrice',
 						formatter: '.formatter.price'
 						} EUR"/>
 				<ToolbarSpacer/>

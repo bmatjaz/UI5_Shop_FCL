@@ -30,7 +30,8 @@ sap.ui.define([
 			this.setModel(models.createDeviceModel(), "device");
 
 			var oCommonData = new JSONModel({
-				cartButonPressed : false
+				cartButonPressed : false,
+				totalPrice: 0
 			})
 			this.setModel(oCommonData, "commonData")
 

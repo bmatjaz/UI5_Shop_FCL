@@ -454,7 +454,7 @@
 								id="totalPriceText"
 								class="totalText"
 								text="Total: {
-									path: '/totalPriceInShoppingCart',
+									path: 'commonData>/totalPrice',
 									formatter: '.formatter.price'
 									} EUR" />
 						</content>

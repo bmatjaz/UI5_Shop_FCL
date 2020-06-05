@@ -60,6 +60,7 @@ sap.ui.define([
 			var oProduct = oEvent.getSource().getBindingContext().getObject();
 			var oCartModel = this.getView().getModel("cartProducts");			
 			cart.addToCart(oResourceBundle, oProduct, oCartModel);
+			this.totalPrice();
 		},
 		getProductDetails: function(oEvent) {
 			var button = this.getView().byId("cartButton");
