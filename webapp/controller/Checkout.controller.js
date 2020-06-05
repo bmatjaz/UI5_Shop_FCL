@@ -180,9 +180,7 @@ sap.ui.define([
 				}
 				return false;
 			});
-		},
-		
-		
+		},		
 		/**
 		 * Called from both <code>setPaymentMethod</code> and <code>setDifferentDeliveryAddress</code> functions.
 		 * Shows warning message if user changes previously selected choice

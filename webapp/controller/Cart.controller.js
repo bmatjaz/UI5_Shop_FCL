@@ -21,6 +21,11 @@ sap.ui.define([
 			this.totalPrice();
 			this._setLayout("Three");
 			this.categoryId = oEvent.getParameter("arguments").categoryID;
+
+
+			if((window.location.href).slice(-5)=="/cart") {
+				this.getModel("commonData").setProperty("/cartButonPressed", true);
+			}
 		},
 		//whenever cart opens call function totalPrice to get sum of all product prices in cart
 		_onObjectMatched: function() {

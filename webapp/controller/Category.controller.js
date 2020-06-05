@@ -16,7 +16,7 @@ sap.ui.define([
 		},
 		_onProductMatched: function (oEvent) {
 			this._setLayout("Two");
-			this.setCartButtonFalse();
+			this.getModel("commonData").setProperty("/cartButonPressed", false);
 			this.categoryId = oEvent.getParameter("arguments").categoryID;
 			var _oTable = this.getView().byId("productsTable");
 			var oTemplate = _oTable.getBindingInfo("items").template;
@@ -25,13 +25,6 @@ sap.ui.define([
 				template: oTemplate,
 			};
 			_oTable.bindAggregation("items", oBindingInfo);
-		},
-		setCartButtonFalse: function() {
-			var button = this.getView().byId("cartButton");
-			if(button.getPressed()){
-				button.setPressed(false);
-				this._setToggleCartButton(false);
-			}
 		},
 		openCart: function () {
 			this.bPressed = this.getView().byId("cartButton");
@@ -65,8 +58,7 @@ sap.ui.define([
 		getProductDetails: function(oEvent) {
 			var button = this.getView().byId("cartButton");
 			if(button.getPressed()){
-				button.setPressed(false);
-				this._setToggleCartButton(false);
+				this.getModel("commonData").setProperty("/cartButonPressed", false);
 			}
 
 			if(this.categoryId == undefined)

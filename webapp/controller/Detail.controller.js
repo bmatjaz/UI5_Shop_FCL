@@ -14,7 +14,6 @@ sap.ui.define([
 			this._oRouter.getRoute("detail").attachPatternMatched(this._onRouteMatched, this);
 		},
 		_onRouteMatched: function(oEvent) {
-			//this._setToggleCartButton(false);
 			this.getModel("commonData").setProperty("/cartButonPressed", false);
 
 			this._setLayout("Three");

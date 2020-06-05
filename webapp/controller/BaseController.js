@@ -132,17 +132,6 @@ sap.ui.define([
 				item2: ""
 			});
 		},
-		_setToggleCartButton: function(isTrue) {
-			this.getView().getModel("commonData");
-
-			var oModel = this.getView().getModel("commonData");
-			var oModelCommonData = oModel.getData();
-
-			oModelCommonData.cartButonPressed=isTrue;
-
-			oModel.setData(oModelCommonData);
-		
-		},
 		totalPrice: function() {
 			var oCartModel = this.getOwnerComponent().getModel("cartProducts").getData().cartEntries;
 			var totalPrice = 0;

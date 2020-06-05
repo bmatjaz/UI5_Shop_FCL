@@ -36,6 +36,7 @@ sap.ui.define([
             }
 		},
 		onBackToEntry: function() {
+			this.getModel("commonData").setProperty("/cartButonPressed", false);
 			this._router.navTo("entry");
 		}
 	});
